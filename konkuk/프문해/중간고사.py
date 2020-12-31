@@ -18,6 +18,8 @@ def midterm():
     elif cal == "/":
         if n2 != 0:
             print(f'{n1}/{n2} = {n1/n2}')
+        else:
+            print('0으로 나눌 수 없습니다.')
     else:
         print('잘못 입력하셨습니다.')
 
