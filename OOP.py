@@ -132,11 +132,67 @@ class BankAccount:
 class Citzen:
     def __init__(self,name,age,id):
         self.name = name
-        self.__age = age
+        self.age = age
         self.id = id
+        
+    @property
+    def age(self):
+        return self._age
 
-    def get_age(self):
-        return self.__age
+    @age.setter
+    def age(self,value):
+        if value <0:
+            self._age = 0
+        else:
+            self._age = value
 
-    def set_age(self,value):
-        return self.__age = value
+
+class CreditCard:
+    MAX_PAYMENT_LIMIT = 30000000
+    def __init__(self,name,password,payment_limit) -> None:
+        self.name = name
+        self._password = password
+        self._payment_limit = payment_limit
+
+    @property
+    def password(self):
+        return self._password
+    
+    @password.setter
+    def password(self,value):
+        self._password = value
+
+    @property
+    def payment_limit(self):
+        return self._payment_limit
+    
+    @payment_limit.setter
+    def payment_limit(self,value):
+        if 0 < value < self.MAX_PAYMENT_LIMIT:
+            self._payment_limit = value
+        else:
+            print("카드 한도는 0원 ~ 3천만 원 사이로 설정해주세요")
+            
+
+## 상속
+# 부모 클래스
+class Employee:
+    company_name = '수민월드'
+    raise_pct = 1.03
+
+    def __init__(self,name,wage) -> None:
+        self.name = name
+        self.wage = wage
+    
+    def raise_pay(self):
+        self.wage *= self.raise_pct
+
+    def __str__(self) -> str:
+        return Employee.company_name + f"직원: {self.name}"
+
+# 자식 클래스
+class Cashier(Employee):
+    pass
+
+print(Cashier.mro())
+

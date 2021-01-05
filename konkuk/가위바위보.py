@@ -1,4 +1,4 @@
-# 가위바위보
+# 12 주차 과제(5) 가위바위보
 import random
 
 def rcp():
