@@ -174,7 +174,7 @@ class CreditCard:
             print("카드 한도는 0원 ~ 3천만 원 사이로 설정해주세요")
             
 
-## 상속
+## 3. 상속
 # 부모 클래스
 class Employee:
     company_name = '수민월드'
@@ -192,7 +192,135 @@ class Employee:
 
 # 자식 클래스
 class Cashier(Employee):
-    pass
+    raise_pct = 1.05
+    price = 4000
 
-print(Cashier.mro())
+    def __init__(self,name,wage,num_sold):
+        # super: 자식 클래스에서 부모 클래스의 method를 호출 할 때, self 쓰지 않는다.
+        super().__init__(name,wage)
+        self.num_sold = num_sold
+
+    def take_order(self,money):
+        if Cashier.price > money:
+            print(f"{Cashier.price-money}원 부족")
+        else:
+            self.num_sold += 1
+            return money - Cashier.price
+
+    def __str__(self):
+        return Cashier.company_name + f"계산대 직원 : {self.name}"
+
+# 다중 상속
+class Engineer:
+    def __init__(self,language):
+        self.language = language
+    
+    def show(self):
+        print(f"활용 가능한 언어: {self.language}")
+
+class Drummer:
+    def __init__(self,durm_stick):
+        self.durm_stick = durm_stick
+    
+    def play_drum(self):
+        print(f"드럼 스틱: {self.durm_stick}")
+
+class EngineerDrummer(Engineer,Drummer):
+    def __init__(self, language,drum_stick):
+        Engineer.__init__(self,language)
+        Drummer.__init__(self,drum_stick)
+    
+hyun = EngineerDrummer('python','promark')
+
+hyun.show()
+
+
+
+from math import pi,sqrt
+
+
+## 4. 다형성
+class Rectangle:
+    def __init__(self,width,height):
+        self.width = width
+        self.height = height
+
+    def area(self):
+        return self.height * self.width
+    
+    def perimeter(self):
+        return 2*(self.height+self.width)
+
+    def __str__(self):
+        return f"밑변 {self.width} 높이 {self.height}인 직사각형"
+
+class Circle:
+    def __init__(self,radius):
+        self.radius = radius
+    
+    def area(self):
+        return pi * self.radius**2
+
+    def perimeter(self):
+        return 2*pi*self.radius
+    
+    def __str__(self):
+        return f"반지름 {self.radius}인 원"
+
+class Paint:
+    def __init__(self):
+        self.shapes = []
+    
+    def add_shape(self,shape):
+        self.shapes.append(shape)
+
+    def total_area(self):
+        return sum([s.area() for s in self.shapes])
+
+    def total_perimeter(self):
+        return sum([s.perimeter() for s in self.shapes])
+    
+    def __str__(self):
+        for s in self.shapes:
+            print(s,"\n")
+
+r1 = Rectangle(3,7)
+c1 = Circle(4)
+
+# 추상 클래스
+from abc import ABC,abstractmethod
+
+class Shape(ABC):
+    @abstractmethod
+    def area(self) -> float:
+        pass
+
+    @abstractmethod
+    def perimeter(self) -> float:
+        pass
+
+class Shape(ABC):
+    @abstractmethod
+    def area(self) -> float:
+        pass
+    
+    @property
+    @abstractmethod
+    def x(self):
+        pass
+
+class RightTri(Shape):
+    def __init__(self,length):
+        self.length = length
+    
+    def area(self):
+        return 2/3 * sqrt(self.length)
+    
+    @property
+    def x(self):
+        return self._x
+
+    @x.setter
+    def x(self,value):
+        self._x = value
 
